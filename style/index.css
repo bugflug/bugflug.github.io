@@ -1,0 +1,62 @@
+:root {
+    /** base colors */
+    --color-bg: black;
+    --color-text: white;
+    /** base unit */
+    --unit: 12px;
+}
+
+/** resets */
+
+*, *::before, *::after {
+    /* layout */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, img {
+    /* layout */
+    display: inline-block;
+
+}
+
+/** units */
+
+html {
+    /* rem definition */
+    font-size: var(--unit);
+}
+
+/** main */
+
+body {
+    /* units */
+    font-size: 1rem;
+    /* colors */
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    /* layout */
+    width: 100vw;
+    min-height: 100vh;
+}
+
+main {
+    /* layout */
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+/** info bar */
+
+#info {
+    /* layout */
+    position: fixed;
+    padding: 2rem;
+}
+
+#info, #info-spacer {
+    /* layout */
+    width: 14rem;
+}
