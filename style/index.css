@@ -1,9 +1,15 @@
 :root {
     /** base colors */
     --color-bg: black;
+    --color-fg: #212121;
+    --color-accent: #6b6b6b;
     --color-text: white;
     /** base unit */
     --unit: 12px;
+    /** breakpoints */
+    --screen-xs: 720px;
+    --screen-s: 1080px;
+    --screen-m: 1280px;
 }
 
 /** resets */
@@ -39,24 +45,72 @@ body {
     /* layout */
     width: 100vw;
     min-height: 100vh;
+    /* grid */
+    display: grid;
 }
+@media only screen and (min-width: 1280px) { body {
+    /* grid */
+    grid-template-columns: 26rem 1fr;
+    grid-template-rows: 100vh minmax(100vh, auto);
+}}
+@media only screen and (min-width: 1080px) { body {
+    /* grid */
+    grid-template-columns: 21rem 1fr;
+    grid-template-rows: 100vh minmax(100vh, auto);
+}}
+@media only screen and (min-width: 720px) { body {
+    /* grid */
+    grid-template-columns: 16rem 1fr;
+    grid-template-rows: 100vh minmax(100vh, auto);
+}}
+@media only screen and (max-width: 720px) { body {
+    /* grid */
+    grid-template-columns: 1fr;
+    grid-template-rows: 30vh minmax(70vh, auto);
+}}
 
-main {
-    /* layout */
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+/** global */
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3, h4, h5, h6 { font-size: 1em; }
+p { font-size: 1em; }
+
+a {
+    /* font */
+    text-decoration: none;
+    /* colors */
+    color: var(--color-accent);
+}
+a:hover, a:focus a:active {
+    /* colors */
+    color: var(--color-text);
 }
 
 /** info bar */
 
-#info {
+@media only screen and (min-width: 720px) { #info {
     /* layout */
     position: fixed;
-    padding: 2rem;
+}}
+@media only screen and (max-width: 720px) { #info {
+    /* layout */
+    position: relative;
+}}
+
+#info-spacer {
+    /* layout */
+    display: flex;
+    align-items: center;
 }
 
-#info, #info-spacer {
+/** main */
+
+@media only screen and (min-width: 720px) { main {
     /* layout */
-    width: 14rem;
-}
+    padding: 20vh 0 0 0;
+}}
+@media only screen and (max-width: 720px) { main {
+    /* layout */
+    padding: 0 2rem 15vh 2rem;
+}}

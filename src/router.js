@@ -1,7 +1,7 @@
 // props to mitch dev
 // https://www.youtube.com/watch?v=ZleShIpv5zQ
 
-const pageContainer = document.querySelector('#page')
+const pageContainer = document.querySelector('main')
 
 const route = (event) => {
     event = event || window.event
@@ -20,9 +20,13 @@ const routes = {
 }
 
 const handleLocation = async () => {
-    pageContainer.innerHTML =
-        await fetch(routes[window.location.pathname] || routes[404])
-        .then((data) => data.text())
+    // clear it
+    pageContainer.innerHTML = ''
+    // getting the text and then creating and html
+    // fragment with it allows the use of <script>
+    const text = await fetch(routes[window.location.pathname] || routes[404]).then(data => data.text())
+    const html = document.createRange().createContextualFragment(text)
+    pageContainer.append(html)
 }
 window.onpopstate = handleLocation
 window.onload = handleLocation
