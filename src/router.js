@@ -7,10 +7,14 @@ const route = (event) => {
     event = event || window.event
     // prevent the window from routing
     event.preventDefault()
-    // cosmetically make it our location
-    window.history.pushState({}, '', event.target.href)
-    // update our page
-    handleLocation()
+
+    // only update the url if its new
+    if (window.location.pathname === event.target.href) {
+        // cosmetically make it our location
+        window.history.pushState({}, '', event.target.href)
+        // update our page
+        handleLocation()
+    }
 }
 window.route = route
 
@@ -20,7 +24,6 @@ const routes = {
 }
 
 const handleLocation = async () => {
-    // clear it
     pageContainer.innerHTML = ''
     // getting the text and then creating and html
     // fragment with it allows the use of <script>

@@ -5,7 +5,7 @@
     --color-accent: #6b6b6b;
     --color-text: white;
     /** base unit */
-    --unit: 12px;
+    --unit: 16px;
     /** breakpoints */
     --screen-xs: 720px;
     --screen-s: 1080px;
@@ -19,6 +19,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    border: none;
 }
 
 h1, h2, h3, h4, h5, h6, p, a, img {
@@ -51,19 +52,19 @@ body {
 @media only screen and (min-width: 1280px) { body {
     /* grid */
     grid-template-columns: 26rem 1fr;
-    grid-template-rows: 100vh minmax(100vh, auto);
+    grid-template-rows: minmax(100vh, auto);
 }}
-@media only screen and (min-width: 1080px) { body {
+@media only screen and (min-width: 1080px) and (max-width: 1279px) { body {
     /* grid */
     grid-template-columns: 21rem 1fr;
-    grid-template-rows: 100vh minmax(100vh, auto);
+    grid-template-rows: minmax(100vh, auto);
 }}
-@media only screen and (min-width: 720px) { body {
+@media only screen and (min-width: 720px) and (max-width: 1079px) { body {
     /* grid */
     grid-template-columns: 16rem 1fr;
-    grid-template-rows: 100vh minmax(100vh, auto);
+    grid-template-rows: minmax(100vh, auto);
 }}
-@media only screen and (max-width: 720px) { body {
+@media only screen and (max-width: 719px) { body {
     /* grid */
     grid-template-columns: 1fr;
     grid-template-rows: 30vh minmax(70vh, auto);
@@ -89,13 +90,23 @@ a:hover, a:focus a:active {
 
 /** info bar */
 
+#info {
+    /* flex */
+    display: flex;
+    /* layout */
+    padding: 2rem;
+}
 @media only screen and (min-width: 720px) { #info {
     /* layout */
     position: fixed;
+    flex-direction: column;
+    max-width: 16rem;
 }}
-@media only screen and (max-width: 720px) { #info {
+@media only screen and (max-width: 719px) { #info {
     /* layout */
     position: relative;
+    flex-direction: row;
+    max-width: auto;
 }}
 
 #info-spacer {
@@ -104,13 +115,19 @@ a:hover, a:focus a:active {
     align-items: center;
 }
 
+#links {
+    /* flex */
+    display: flex;
+    flex-direction: column;
+}
+
 /** main */
 
 @media only screen and (min-width: 720px) { main {
     /* layout */
-    padding: 20vh 0 0 0;
+    padding: 0;
 }}
 @media only screen and (max-width: 720px) { main {
     /* layout */
-    padding: 0 2rem 15vh 2rem;
+    padding: 0 2rem 0 2rem;
 }}
