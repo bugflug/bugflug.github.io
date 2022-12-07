@@ -5,23 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- style -->
         <link rel="stylesheet" href="style/index.css">
-        <!-- external scripts -->
-        <script src="https://embed.twitch.tv/embed/v1.js"></script>
+        <!-- scripts -->
+        <script type="module" src="src/config.js"></script>
+        <script type="module" src="src/components.js"></script>
     </head>
     <body>
         <div id="info-spacer">
-            <div id="info">
-                <a href="/" onclick="route()"><img src="assets/kirby.gif"></a>
-                <div id="links">
-                    <!-- populated with src/links.js -->
-                </div>
-            </div>
+            <script type="module">appendComponent('#info-spacer', '/components/info.html')</script>
         </div>
         <main>
         </main>
     </body>
     <!-- scripts -->
-    <script type="module" src="src/config.js"></script>
     <script type="module" src="src/router.js"></script>
-    <script type="module" src="src/links.js"></script>
+    <!-- external scripts -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
 </html>

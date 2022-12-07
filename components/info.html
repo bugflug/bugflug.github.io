@@ -1,0 +1,104 @@
+<!-- markup -->
+<div class="info">
+    <a href="/" onclick="route()" class="title unpopulated"></a>
+    <div class="pages unpopulated"></div>
+    <div class="accounts unpopulated"></div>
+</div>
+
+<style>
+    .title {
+        /* font */
+        font-size: 2em;
+    }
+
+    .title span {
+        /* layout */
+        position: relative;
+        /* anim */
+        animation: title-bounce 4s ease infinite;
+    }
+
+    @keyframes title-bounce {
+        0% {
+            top: -0.25em;
+        }
+        50% {
+            top: 0.25em;
+        }
+        100% {
+            top: -0.25em;
+        }
+    }
+
+    .accounts, .pages {
+        /* flex */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .accounts a, .pages a {
+        /* layout */
+        position: relative;
+        /* anim */
+        animation: a-append 0.3s ease;
+    }
+
+    @keyframes a-append {
+        from {
+            left: -1%;
+            opacity: 0;
+        }
+        to {
+            left: 0;
+            opacity: 1;
+        }
+    }
+</style>
+
+<!-- script -->
+<script type="module">
+    import { config } from '/src/config.js'
+    import { routes } from '/src/router.js'
+
+    // bouncing title animation
+    const titleContainer = document.querySelector('.title.unpopulated')
+    ;(async () => {
+        for (let char of 'bugflug'.split('')) {
+            let span = document.createElement('span')
+            span.appendChild(document.createTextNode(char))
+            titleContainer.appendChild(span)
+            await new Promise(resolve => setTimeout(resolve, 200))
+        }
+    })()
+    titleContainer.classList.remove('unpopulated')
+
+    // gather pages and append them
+    const pagesContainer = document.querySelector('.pages.unpopulated')
+    ;(async () => {
+        for (let key in routes) {
+            let route = routes[key]
+            if (!route.hidden) {
+                let a = document.createElement('a')
+                a.appendChild(document.createTextNode(key))
+                a.href = key
+                a.setAttribute('onclick', 'route()')
+                pagesContainer.appendChild(a)
+                await new Promise(resolve => setTimeout(resolve, 100))
+            }
+        }
+    })()
+    pagesContainer.classList.remove('unpopulated')
+
+    // gather accounts and append them
+    const accountsContainer = document.querySelector('.accounts.unpopulated')
+    ;(async () => {
+        for (let account of config.accounts) {
+            let a = document.createElement('a')
+            a.appendChild(document.createTextNode(account.site))
+            a.href = 'https://' + account.url
+            accountsContainer.appendChild(a)
+            await new Promise(resolve => setTimeout(resolve, 100))
+        }
+    })()
+    accountsContainer.classList.remove('unpopulated')
+</script>
