@@ -7,3 +7,13 @@ export const appendComponent = async (parent, src) => {
     parent.append(html)
 }
 window.appendComponent = appendComponent
+
+// modify an element on an async schedule
+export const asyncModify = (el, doesModifyClass, callback) => {
+    if (typeof el === 'string') (doesModifyClass) ? el = document.querySelector(el + '.unmodified') : el = document.querySelector(el)
+    ;(async () => {
+        await callback(el)
+        if (doesModifyClass) el.classList.add('modified')
+    })()
+    if (el.classList.contains('unmodified')) el.classList.remove('unmodified')
+}

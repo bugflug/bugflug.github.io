@@ -22,8 +22,9 @@ window.route = route
 
 // master route list
 export const routes = {
-    '/404':  { src: '/pages/404.html', hidden: true},
-    '/':     { src: '/pages/index.html', hidden: true }
+    '/404':   { src: '/pages/404.html', hidden: true},
+    '/':      { src: '/pages/index.html', hidden: true },
+    '/items': { src: '/pages/itemcollection.html', name: 'item collection'}
 }
 
 const handleLocation = () => {

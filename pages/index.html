@@ -10,13 +10,8 @@
         /* layout */
         padding: 20vh 0 0 0;
         /* grid */
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: minmax(auto, 30vh) auto;
-        grid-template-areas:
-        'stream       stream       '
-        'content-left content-right';
-        gap: 2rem;
+        display: flex;
+        flex-direction: column;
     }
     @media only screen and (min-width: 1080px) { main {
         /* layout */
@@ -31,9 +26,12 @@
         padding: 0 2rem 0 2rem;
     }}
 
-    #stream-wrapper {
+    #info-spacer .info {
         /* layout */
-        grid-area: stream;
+        opacity: 0;
+    }
+
+    #stream-wrapper {
         /* anim */
         transition: opacity 0.2s ease, max-height 1s ease;
     }

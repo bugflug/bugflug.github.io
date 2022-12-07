@@ -1,17 +1,21 @@
 <!-- markup -->
 <div class="info">
-    <a href="/" onclick="route()" class="title unpopulated"></a>
-    <div class="pages unpopulated"></div>
-    <div class="accounts unpopulated"></div>
+    <a href="/" onclick="route()" class="title unmodified"></a>
+    <div class="pages unmodified"></div>
+    <div class="accounts unmodified"></div>
 </div>
 
 <style>
-    .title {
+    .info .title {
         /* font */
         font-size: 2em;
+        font-family: var(--font-serif);
+        font-weight: 700;
+        /* colors */
+        color: var(--color-text);
     }
 
-    .title span {
+    .info .title span {
         /* layout */
         position: relative;
         /* anim */
@@ -30,13 +34,13 @@
         }
     }
 
-    .accounts, .pages {
+    .info .accounts, .info .pages {
         /* flex */
         display: flex;
         flex-direction: column;
     }
 
-    .accounts a, .pages a {
+    .info .accounts a, .info .pages a {
         /* layout */
         position: relative;
         /* anim */
@@ -59,46 +63,81 @@
 <script type="module">
     import { config } from '/src/config.js'
     import { routes } from '/src/router.js'
+    import { asyncModify } from '/src/components.js'
+    import { shuffle } from '/src/util.js'
+
+    // random title colors
+    // from lospec.com/palette-list/pico-8
+    window.textColors = window.textColors || shuffle([
+        '#ff306c',
+        '#ad005f',
+        '#e04f0b',
+        '#ffa200',
+        '#ffe74c',
+        '#ebffd4',
+        '#48ff00',
+        '#00cf2d',
+        '#31d4e0',
+        '#006ec2',
+        '#1629f7',
+        '#450073',
+        '#8e1cc7',
+        '#f018f0'
+    ])
 
     // bouncing title animation
-    const titleContainer = document.querySelector('.title.unpopulated')
-    ;(async () => {
-        for (let char of 'bugflug'.split('')) {
+    asyncModify('.title', true, async (el) => {
+        // check if there are enough colors
+        let chars = 'bugflug'.split('')
+        while (window.textColors.length < chars.length) window.textColors = window.textColors.concat(window.textColors)
+
+        // prevent repeat colors
+        let colorIndex = 0
+        let lastColor = null
+
+        // iterate the chars
+        for (let char of chars) {
             let span = document.createElement('span')
             span.appendChild(document.createTextNode(char))
-            titleContainer.appendChild(span)
+
+            // prevent repeat colors
+            let color = window.textColors[colorIndex]
+            while (color === lastColor) {
+                colorIndex++
+                color = window.textColors[colorIndex]
+            }
+            span.style.color = color
+            colorIndex++
+            lastColor = color
+
+            el.appendChild(span)
             await new Promise(resolve => setTimeout(resolve, 200))
         }
-    })()
-    titleContainer.classList.remove('unpopulated')
+    })
 
     // gather pages and append them
-    const pagesContainer = document.querySelector('.pages.unpopulated')
-    ;(async () => {
+    asyncModify('.pages', true, async (el) => {
         for (let key in routes) {
             let route = routes[key]
             if (!route.hidden) {
                 let a = document.createElement('a')
-                a.appendChild(document.createTextNode(key))
+                a.appendChild(document.createTextNode(route.name || key))
                 a.href = key
                 a.setAttribute('onclick', 'route()')
-                pagesContainer.appendChild(a)
+                el.appendChild(a)
                 await new Promise(resolve => setTimeout(resolve, 100))
             }
         }
-    })()
-    pagesContainer.classList.remove('unpopulated')
+    })
 
     // gather accounts and append them
-    const accountsContainer = document.querySelector('.accounts.unpopulated')
-    ;(async () => {
+    asyncModify('.accounts', true, async (el) => {
         for (let account of config.accounts) {
             let a = document.createElement('a')
             a.appendChild(document.createTextNode(account.site))
             a.href = 'https://' + account.url
-            accountsContainer.appendChild(a)
+            el.appendChild(a)
             await new Promise(resolve => setTimeout(resolve, 100))
         }
-    })()
-    accountsContainer.classList.remove('unpopulated')
+    })
 </script>
