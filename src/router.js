@@ -1,10 +1,17 @@
-import { appendComponent } from "./components.js"
+import { routes } from './routes.js'
+import { append, remove } from "./components.js"
 
 // props to mitch dev
 // https://www.youtube.com/watch?v=ZleShIpv5zQ
 
 const pageContainer = document.querySelector('main')
+let currentPage = null
 
+/**
+ * prevent an 'a' element from traveling to
+ * its href if this method is used.
+ * @param {Object} event 
+ */
 export const route = (event) => {
     event = event || window.event
     // prevent the window from routing
@@ -20,17 +27,16 @@ export const route = (event) => {
 }
 window.route = route
 
-// master route list
-export const routes = {
-    '/404':   { src: '/pages/404.html', hidden: true},
-    '/':      { src: '/pages/index.html', hidden: true },
-    '/items': { src: '/pages/itemcollection.html', name: 'item collection'}
-}
-
-const handleLocation = () => {
-    console.log('traveling to ' + window.location.pathname)
-    pageContainer.innerHTML = ''
-    appendComponent(pageContainer, (routes[window.location.pathname] || routes['/404']).src)
+/**
+ * handles the current location
+ */
+export const handleLocation = () => {
+    if (!!currentPage) remove(pageContainer, currentPage)
+    console.log(window.location.pathname)
+    let src = routes[window.location.pathname] || routes['/404']
+    currentPage = src
+    append(pageContainer, src)
 }
 window.onpopstate = handleLocation
 window.onload = handleLocation
+

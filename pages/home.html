@@ -1,5 +1,4 @@
 <!-- markup -->
-<script>appendComponent('main', '/components/info.html')</script>
 <div id="stream-wrapper" class="hidden">
     <div id="stream"></div>
 </div>
@@ -25,11 +24,6 @@
         /* layout */
         padding: 0 2rem 0 2rem;
     }}
-
-    #info-spacer .info {
-        /* layout */
-        opacity: 0;
-    }
 
     #stream-wrapper {
         /* anim */
@@ -67,31 +61,3 @@
 
 <!-- script -->
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
-<script type="module">
-    import { config } from '../src/config.js'
-
-    const streamWrapper = document.querySelector('#stream-wrapper')
-    const streamContainer = document.querySelector('#stream')
-
-    const player = new Twitch.Player('stream', {
-        channel: config.accountNames.twitch,
-        width: 1280,
-        height: 720,
-        muted: 'true'
-    })
-
-    // wait for the proper responses to show/hide
-    player.addEventListener(Twitch.Player.READY, () => {
-        player.addEventListener(Twitch.Player.ONLINE, () => {
-            player.addEventListener(Twitch.Player.PLAYING, () => {
-                player.setVolume(0.2)
-                player.setMuted(false)
-                streamWrapper.classList.remove('hidden')
-                streamWrapper.classList.add('show')
-            })
-        })
-        player.addEventListener(Twitch.Player.OFFLINE, () => {
-            streamContainer.innerHTML = ''
-        })
-    })
-</script>

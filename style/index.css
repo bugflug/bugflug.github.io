@@ -93,40 +93,29 @@ a:hover, a:focus a:active {
     color: var(--color-text);
 }
 
-/** info bar */
+/** main */
 
-#info {
-    /* flex */
-    display: flex;
-    /* layout */
-    padding: 2rem;
-}
-@media only screen and (min-width: 720px) { #info {
-    /* layout */
-    position: fixed;
-    flex-direction: column;
-    max-width: 16rem;
-}}
-@media only screen and (max-width: 719px) { #info {
+#info-bar {
     /* layout */
     position: relative;
-    flex-direction: row;
-    max-width: auto;
-}}
-
-#info-spacer {
-    /* layout */
-    display: flex;
-    align-items: center;
-}
-
-#links {
+    left: 0;
     /* flex */
     display: flex;
-    flex-direction: column;
 }
+@media only screen and (min-width: 720px) { #info-bar {
+    /* flex */
+    align-items: flex-end;
+}}
 
-/** main */
+#info-bar .info {
+    /* layout */
+    position: relative;
+    left: 0;
+}
+#info-bar.hidden .info {
+    /* layout */
+    left: -100%;
+}
 
 @media only screen and (min-width: 720px) { main {
     /* layout */

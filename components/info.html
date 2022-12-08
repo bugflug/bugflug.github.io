@@ -1,11 +1,36 @@
 <!-- markup -->
 <div class="info">
     <a href="/" onclick="route()" class="title unmodified"></a>
-    <div class="pages unmodified"></div>
-    <div class="accounts unmodified"></div>
+    <div class="links">
+        <div class="pages unmodified"></div>
+        <div class="accounts unmodified"></div>
+    </div>
 </div>
 
+<!-- style -->
 <style>
+    .info {
+        /* flex */
+        display: flex;
+        gap: 2rem;
+    }
+    @media only screen and (min-width: 720px) { .info {
+        /* flex */
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        /* layout */
+        padding: 2rem 0 2rem 2rem;
+    }}
+    @media only screen and (max-width: 719px) { .info {
+        /* flex */
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        /* layout */
+        padding: 1.5rem 0 1.5rem 0;
+    }}
+
     .info .title {
         /* font */
         font-size: 2em;
@@ -24,120 +49,42 @@
 
     @keyframes title-bounce {
         0% {
-            top: -0.25em;
+            top: -0.5em;
         }
         50% {
-            top: 0.25em;
+            top: 0em;
         }
         100% {
-            top: -0.25em;
+            top: -0.5em;
         }
     }
 
-    .info .accounts, .info .pages {
+    .info .links {
         /* flex */
         display: flex;
         flex-direction: column;
+        gap: 2rem;
     }
 
-    .info .accounts a, .info .pages a {
+    .info .links .accounts,
+    .info .links .pages {
+        /* flex */
+        display: flex;
+        flex-direction: column;
         /* layout */
-        position: relative;
+        opacity: 0;
         /* anim */
-        animation: a-append 0.3s ease;
+        transition: opacity 1s ease;
     }
 
-    @keyframes a-append {
-        from {
-            left: -1%;
-            opacity: 0;
-        }
-        to {
-            left: 0;
-            opacity: 1;
-        }
+    .info .links .accounts.modified,
+    .info .links .pages.modified {
+        /* layout */
+        opacity: 1;
+    }
+
+    .info .links .pages a {
+        /* colors */
+        color: var(--color-text);
     }
 </style>
-
-<!-- script -->
-<script type="module">
-    import { config } from '/src/config.js'
-    import { routes } from '/src/router.js'
-    import { asyncModify } from '/src/components.js'
-    import { shuffle } from '/src/util.js'
-
-    // random title colors
-    // from lospec.com/palette-list/pico-8
-    window.textColors = window.textColors || shuffle([
-        '#ff306c',
-        '#ad005f',
-        '#e04f0b',
-        '#ffa200',
-        '#ffe74c',
-        '#ebffd4',
-        '#48ff00',
-        '#00cf2d',
-        '#31d4e0',
-        '#006ec2',
-        '#1629f7',
-        '#450073',
-        '#8e1cc7',
-        '#f018f0'
-    ])
-
-    // bouncing title animation
-    asyncModify('.title', true, async (el) => {
-        // check if there are enough colors
-        let chars = 'bugflug'.split('')
-        while (window.textColors.length < chars.length) window.textColors = window.textColors.concat(window.textColors)
-
-        // prevent repeat colors
-        let colorIndex = 0
-        let lastColor = null
-
-        // iterate the chars
-        for (let char of chars) {
-            let span = document.createElement('span')
-            span.appendChild(document.createTextNode(char))
-
-            // prevent repeat colors
-            let color = window.textColors[colorIndex]
-            while (color === lastColor) {
-                colorIndex++
-                color = window.textColors[colorIndex]
-            }
-            span.style.color = color
-            colorIndex++
-            lastColor = color
-
-            el.appendChild(span)
-            await new Promise(resolve => setTimeout(resolve, 200))
-        }
-    })
-
-    // gather pages and append them
-    asyncModify('.pages', true, async (el) => {
-        for (let key in routes) {
-            let route = routes[key]
-            if (!route.hidden) {
-                let a = document.createElement('a')
-                a.appendChild(document.createTextNode(route.name || key))
-                a.href = key
-                a.setAttribute('onclick', 'route()')
-                el.appendChild(a)
-                await new Promise(resolve => setTimeout(resolve, 100))
-            }
-        }
-    })
-
-    // gather accounts and append them
-    asyncModify('.accounts', true, async (el) => {
-        for (let account of config.accounts) {
-            let a = document.createElement('a')
-            a.appendChild(document.createTextNode(account.site))
-            a.href = 'https://' + account.url
-            el.appendChild(a)
-            await new Promise(resolve => setTimeout(resolve, 100))
-        }
-    })
-</script>
