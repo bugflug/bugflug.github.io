@@ -38,5 +38,3 @@ export const handleLocation = () => {
     append(pageContainer, src)
 }
 window.onpopstate = handleLocation
-window.onload = handleLocation
-

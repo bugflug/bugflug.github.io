@@ -6,9 +6,7 @@
         <!-- style -->
         <link rel="stylesheet" href="style/index.css">
         <!-- scripts -->
-        <script type="module" src="src/config.js"></script>
-        <script type="module" src="src/components.js"></script>
-        <script type="module" src="src/router.js"></script>
+        <script type="module" src="src/index.js"></script>
         <!-- google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,15 +16,6 @@
         <div id="info-bar"></div>
         <main></main>
     </body>
-    <!-- scripts -->
-    <script type="module">
-        import { comInfo } from './components/info.js'
-        import { handleLocation } from './src/router.js'
-
-        component.append('#info-bar', comInfo)
-
-        handleLocation()
-    </script>
     <!-- external scripts -->
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
 </html>
