@@ -7,6 +7,16 @@
         <link rel="stylesheet" href="style/index.css">
         <!-- scripts -->
         <script type="module" src="src/index.js"></script>
+        <script type="module">
+            /**
+             * initialize the app/router/etc.
+             * i do this here in an inline script because
+             * type="module" scripts cant seem to add
+             * event listeners. its so god damn frusturating.
+             */
+            import { init } from "/src/index.js"
+            document.addEventListener('DOMContentLoaded', init(event))
+        </script>
         <!-- google fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

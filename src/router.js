@@ -1,11 +1,10 @@
 import { routes } from './routes.js'
-import { append, remove } from "./components.js"
 
 // props to mitch dev
 // https://www.youtube.com/watch?v=ZleShIpv5zQ
 
 const pageContainer = document.querySelector('main')
-let currentPage = null
+export let page = { unmount: () => {} }
 
 /**
  * prevent an 'a' element from traveling to
@@ -30,11 +29,11 @@ window.route = route
 /**
  * handles the current location
  */
-export const handleLocation = () => {
-    if (!!currentPage) remove(pageContainer, currentPage)
-    console.log(window.location.pathname)
-    let src = routes[window.location.pathname] || routes['/404']
-    currentPage = src
-    append(pageContainer, src)
+export const handleLocation = async () => {
+    page.unmount()
+    let route = routes[window.location.pathname] || routes['/404']
+    page = new route()
+    await page.build()
+    page.mount(pageContainer)
 }
 window.onpopstate = handleLocation
