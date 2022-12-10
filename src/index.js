@@ -6,22 +6,16 @@ import '/src/router.js'
 import '/src/frag.js'
 
 import { FragInfo } from '/frags/info.js'
-import { handleLocation } from '/src/router.js'
+import { init as routerInit } from '/src/router.js'
 
 import { Frag } from '/src/frag.js'
 
-export const init = async () => {
+export const init = () => {
     // make our info bar
-    new FragInfo().build().then(f => f.mount('#info-bar'))
+    new FragInfo()
+        .build()
+        .then(f => f.mount('#info-bar'))
 
     // route to the url
-    await handleLocation()
-
-    /*new Frag()
-        .build()
-        .then(f => { f.test() ; return f })
-        .then(f => f.mount('main'))
-        .then(f => { f.test() ; return f })
-        .then(f => f.unmount())
-        .then(f => { f.test() ; window.testfrag = f })*/
+    routerInit()
 }

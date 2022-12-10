@@ -1,28 +1,35 @@
-window.component = {}
+import { el } from '/src/util.js'
 
-// avoid making new parsers if possible
-export const parser = new DOMParser()
+export const hook = {
+    constructor () {},
+    build () {},
+    mount () {},
+    unmount () {}
+}
 
 /**
+ * frag class :D
  * 
+ * @prop {string} path - path to pull HTML from
  */
 export class Frag {
-    // path to pull HTML from
-    path = '/pages/404.html'
-    // DocumentFragment
-    #frag
-    // parent element
-    #parent
-    // range
-    #range
+    path  = '/pages/404.html'
+    hook  = hook
+    frags = []
+    
+    // @private
+    #frag   = undefined
+    #parent = undefined
+    #range  = undefined
 
     /**
      * build before using!
      */
     constructor () {
-        this.#frag    = undefined
-        this.#parent  = undefined
-        this.#range   = undefined
+        this.hook    = { ...hook, ...this.hook }
+
+        // @hook
+        this.hook.constructor(this)
     }
 
     /**
@@ -38,6 +45,11 @@ export class Frag {
             await fetch(this.path)
             .then(data => data.text()))
 
+        // @hook
+        // seems like checking for variables existing
+        // is necessary in async methods
+        if (this.hook.build) this.hook.build(this)
+
         return this
     }
 
@@ -47,36 +59,61 @@ export class Frag {
      * @returns
      */
     mount(parent) {
-        (typeof parent === 'string') ? this.#parent = document.querySelector(parent) : this.#parent = parent
-        let fraglength = this.#frag.childNodes.length
-
-        // [1]
-        this.#parent.appendChild(this.#frag)
-        
+        // @update
+        this.#parent = el.from(parent)
         this.#range = document.createRange()
-        // [3]
-        this.#range.setStart(
-            this.#parent.childNodes[this.#parent.childNodes.length - fraglength], 0)
-        this.#range.setEnd(
+
+        //this.frags.forEach(f => f.mount(this.#frag))
+
+        // @hook
+        if (this.hook.mount) this.hook.mount(parent, this.#frag)
+
+        // get the length now before it gets cleared when appended
+        let dif = this.#frag.childNodes.length
+
+        // appending a document frag clears it by move
+        this.#parent.appendChild(this.#frag)
+        this.#range.setStartBefore(
+            this.#parent.childNodes[this.#parent.childNodes.length - dif], 0)
+        this.#range.setEndAfter(
             this.#parent.childNodes[this.#parent.childNodes.length - 1], 0)
+
 
         return this
     }
-
-    test () { console.log('range:', this.#range, 'frag:', this.#frag) }
 
     /**
      * remove the component from the DOM
      * @returns
      */
     unmount() {
-        if (!this.#range) throw new Error('this frag has no range to unmount!')
+        if (!this.#range)  throw new Error('this frag has no range to unmount!')
+        if (!this.#parent) return false
 
+        // handle child frags
+        this.frags.forEach(f => f.unmount())
+
+        // @update
         this.#frag = this.#range.extractContents()
-        //this.#range = undefined
+        this.#range.detach() ; this.#range = undefined
+
+        // @hook
+        if (this.hook.unmount) this.hook.unmount(this.#frag)
 
         return this
     }
+}
+
+/**
+ * @extends Frag
+ * @prop {string}  href           - the url path this page should be linked to
+ * @prop {string}  [name=]        - name of the page
+ * @prop {boolean} [hidden=false] - hidden or not when listing pages?
+ */
+export class Page extends Frag {
+    static href   = '/404'
+    static name   = undefined
+    static hidden = false
 }
 
 /**

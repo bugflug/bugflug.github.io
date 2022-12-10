@@ -1,10 +1,12 @@
-import { routes } from './routes.js'
+import { routes } from '/src/routes.js'
+import { el } from '/src/util.js'
 
 // props to mitch dev
 // https://www.youtube.com/watch?v=ZleShIpv5zQ
 
-const pageContainer = document.querySelector('main')
-export let page = { unmount: () => {} }
+let container = undefined
+let initialized = false
+export let page = undefined
 
 /**
  * prevent an 'a' element from traveling to
@@ -32,8 +34,19 @@ window.route = route
 export const handleLocation = async () => {
     page.unmount()
     let route = routes[window.location.pathname] || routes['/404']
-    page = new route()
-    await page.build()
-    page.mount(pageContainer)
+    new route()
+        .build()
+        .then(f =>f.mount(container))
+        .then(f => page = f)
 }
 window.onpopstate = handleLocation
+
+/**
+ * initialize the router at the given parent
+ * @param {string|Element} [target='<main>'] - container to attach to
+ */
+export const init = (target) => {
+    page = { unmount: () => {} }
+    target = (!!target) ? el.from(target) : el.from('main')
+    el.modify(target, handleLocation).then(el => container = el)
+}
