@@ -1,8 +1,7 @@
 import { config } from '/src/config.js'
 import { Page } from '/src/frag.js'
-import { FragInfo } from '/frags/info.js'
-
-const info = new FragInfo()
+import { FragAccounts } from '/frags/accounts.js'
+import { FragPages } from '/frags/pages.js'
 
 export class PageHome extends Page {
     static href = '/'
@@ -10,16 +9,10 @@ export class PageHome extends Page {
     //static hidden = true
 
     path  = '/pages/home.html'
-    frags = [ new FragInfo() ]
+    frags = [ new FragAccounts(), new FragPages () ]
 
     hook = {
-        mount (parent, frag) {
-            // add info to main
-            info.build().then(f => f.mount(frag))
-
-            // hide the sidebar info-bar
-            document.querySelector('#info-bar').classList.add('hidden')
-
+        mounted (_) {
             const streamWrapper = document.querySelector('#stream-wrapper')
             const streamContainer = document.querySelector('#stream')
         
@@ -45,11 +38,6 @@ export class PageHome extends Page {
                     streamContainer.innerHTML = ''
                 })
             })
-        },
-
-        unmount () {
-            info.unmount()
-            document.querySelector('#info-bar').classList.remove('hidden')
         }
     }
 }

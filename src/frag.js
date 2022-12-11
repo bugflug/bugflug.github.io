@@ -26,7 +26,8 @@ export class Frag {
     /**
      * build before using!
      */
-    constructor () {}
+    constructor () {
+    }
 
     /**
      * build the component
@@ -42,11 +43,14 @@ export class Frag {
             .createContextualFragment(
                 await fetch(this.path)
                 .then(data => data.text()))
+        
+        // @frags
+        for (let i in this.frags) { await this.frags[i].build() }
 
         // @hook
         // seems like checking for variables existing
         // is necessary in async methods
-        if (this.hook.build) this.hook.build(this)
+        if (this.hook.build) this.hook.build(this.#frag)
         return this
     }
 
@@ -63,6 +67,7 @@ export class Frag {
         this.#parent = el.from(parent)
         this.#range = document.createRange()
 
+        // @frags
         this.frags.forEach(f => f.mount(this.#frag))
 
         // get the length now before it gets cleared when appended
@@ -76,7 +81,7 @@ export class Frag {
             this.#parent.childNodes[this.#parent.childNodes.length - 1], 0)
 
         // @style
-        this.#parent.classList.add('mounted')
+        if (!!this.#parent.classList) this.#parent.classList.add('mounted')
         // @hook
         if (this.hook.mounted) this.hook.mounted(this.#parent)
         return this
@@ -93,7 +98,7 @@ export class Frag {
         // @hook
         if (this.hook.unmount) this.hook.unmount(this.#parent)
 
-        // handle child frags
+        // @frags
         this.frags.forEach(f => f.unmount())
 
         // @update
@@ -101,7 +106,7 @@ export class Frag {
         this.#range.detach() ; this.#range = undefined
 
         // @style
-        this.#parent.classList.remove('mounted')
+        if (!!this.#parent.classList) this.#parent.classList.remove('mounted')
 
         this.#parent = undefined
 

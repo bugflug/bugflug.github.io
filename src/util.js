@@ -16,33 +16,32 @@ export const shuffle = (array) => {
 }
 
 export const el = {
-    check: (el) => (el instanceof Element || el instanceof Document),
+    check: (el) => (el instanceof Element || el instanceof DocumentFragment || el instanceof Document),
 
     /**
      * returns an element if it is a string or Element.
      * throws an error if it is not
-     * @param {string|Element|any} el - string, Element, or any
-     * @param {Document|DocumentFragment} [doc=document] - document base to use
+     * @param {string|Element|any}                el                - string, Element, or any
+     * @param {Document|DocumentFragment|Element} [parent=Document] - base node to use
      * @returns {Element}
      */
-    from (el, doc) {
+    from (el, parent) {
         if (this.check(el)) return el
-        if (!doc) doc = document
-        if (typeof el === 'string') return doc.querySelector(el)
+        if (!parent) parent = document
+        if (typeof el === 'string') return parent.querySelector(el)
         throw new Error('not a string nor an element!')
     },
 
     /**
      * modifies an element with the given callback.
      * applies the 'unmodified' (if not present) class and the 'modified' class.
-     * @param {string|Element|any} el - string, Element, or any
-     * @param {function} callback - callback to run
-     * @param {Document|DocumentFragment} [doc=document] - document base to use
+     * @param {string|Element|any}                el                - string, Element, or any
+     * @param {function}                          callback          - callback to run
+     * @param {Document|DocumentFragment|Element} [parent=Document] - base node to use
      * @returns {Promise<Element>}
      */
-    async modify (el, callback, doc) {
-        if (!this.check(el)) throw new Error('not an element! use el.from()')
-        if (!doc) doc = document
+    async modify (el, callback, parent) {
+        el = this.from(el, parent)
 
         let classList = el.classList
 

@@ -56,8 +56,7 @@ export class Router {
         this.container.innerHTML = ''
 
         // mount our new view
-        let route = this.routes[url] || this.routes['/404']
-        new route()
+        new (this.routes[url] || this.routes['/404'])()
             .build()
             .then(f => f.mount(this.container))
             .then(f => this.page = f)
@@ -79,7 +78,7 @@ export class Router {
             // cosmetically make it our location
             window.history.pushState({}, '', event.target.href || '/')
             // update our page
-            this.handleLocation()
+            this.update()
         }
     }
 }
