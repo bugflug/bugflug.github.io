@@ -6,9 +6,8 @@ import '/src/router.js'
 import '/src/frag.js'
 
 import { FragInfo } from '/frags/info.js'
-import { init as routerInit } from '/src/router.js'
-
-import { Frag } from '/src/frag.js'
+import { routes } from '/src/routes.js'
+import { Router } from '/src/router.js'
 
 export const init = () => {
     // make our info bar
@@ -17,5 +16,5 @@ export const init = () => {
         .then(f => f.mount('#info-bar'))
 
     // route to the url
-    routerInit()
+    new Router(routes).mount('main')
 }

@@ -1,11 +1,12 @@
 import { config } from '/src/config.js'
 import { routes } from '/src/routes.js'
-import { asyncModify } from '/src/frag.js'
 import { el } from '/src/util.js'
 import { shuffle } from '/src/util.js'
 import { Frag } from '/src/frag.js'
 
-export const colors = shuffle([
+// title color randomization
+// from lospec.com/palette-list/pico-8
+export let colors = shuffle([
     '#ff306c',
     '#ad005f',
     '#e04f0b',
@@ -26,15 +27,15 @@ export class FragInfo extends Frag {
     static colors = null
     static title = 'bugflug'.split('')
 
+    constructor () {
+        while (colors.length < FragInfo.title.length) colors = colors.concat(colors)
+        colors = shuffle(colors)
+
+        super ()
+    }
+
     path = 'frags/info.html'
     hook = {
-        constructor () {
-            // title color randomization
-            // from lospec.com/palette-list/pico-8
-            while (colors.length < FragInfo.title.length) colors = colors.concat(colors)
-            colors = shuffle(colors)
-        },
-
         mount (parent, frag) {
             // bouncing title animation
             el.modify(el.from('.title', frag), async (el) => {
