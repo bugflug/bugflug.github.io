@@ -1,11 +1,10 @@
-import { Frag } from '/src/frag.js'
-import { el } from '/src/util.js'
+import { Frag, el } from '/mod/frag/index.js'
 import { config } from '/src/config.js'
 
 export class FragAccounts extends Frag {
     path = '/frags/accounts.html'
     hook = {
-        build (frag) {
+        build (f) {
             // loop and append each account
             // as a link with the site as text
             el.modify('.accounts', el => {
@@ -16,7 +15,7 @@ export class FragAccounts extends Frag {
                     
                     el.appendChild(a)
                 }
-            }, frag)
+            }, f.frag)
         }
     }
 }

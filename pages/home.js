@@ -1,7 +1,8 @@
 import { config } from '/src/config.js'
-import { Page } from '/src/frag.js'
+import { Page } from '/mod/frag/index.js'
 import { FragAccounts } from '/frags/accounts.js'
 import { FragPages } from '/frags/pages.js'
+import { FragTitle } from '/frags/title.js'
 
 export class PageHome extends Page {
     static href = '/'
@@ -9,7 +10,11 @@ export class PageHome extends Page {
     //static hidden = true
 
     path  = '/pages/home.html'
-    frags = [ new FragAccounts(), new FragPages () ]
+    frags = {
+        'title'   : FragTitle,
+        'accounts': FragAccounts,
+        'pages'   : FragPages
+    }
 
     hook = {
         mounted (_) {

@@ -1,20 +1,19 @@
-import '/src/config.js'
-import '/src/util.js'
-import '/src/frag.js'
-import '/src/routes.js'
-import '/src/router.js'
-import '/src/frag.js'
-
-import { FragInfo } from '/frags/info.js'
+import { FragSidebar } from '/frags/sidebar.js'
 import { routes } from '/src/routes.js'
-import { Router } from '/src/router.js'
+import { Router, Collection } from '/mod/frag/index.js'
 
-export const init = () => {
+export const init = (event) => {
     // make our info bar
-    new FragInfo()
+    new FragSidebar()
+        .target('body', 'sidebar')
         .build()
-        .then(f => f.mount('#info-bar'))
+        .then(f => {
+            f.mount()
+            //FragSidebar.show()
+        })
 
     // route to the url
-    new Router(routes).mount('main')
+    new Router(routes)
+        .target('main', 'view')
+        .update()
 }

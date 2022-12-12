@@ -1,0 +1,22 @@
+<!-- markup -->
+<a class="title"></a>
+
+<!-- style -->
+<style>
+    .title span {
+        /* font */
+        font-family: var(--font-serif);
+        font-weight: 800;
+        font-size: 2em;
+        /* layout */
+        position: relative;
+        /* anim */
+        animation: title-bounce 4s ease infinite;
+    }
+
+    @keyframes title-bounce {
+        0%   { top: 0;      }
+        50%  { top: -0.5em; }
+        100% { top: 0;      }
+    }
+</style>
