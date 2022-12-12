@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "rollup": "^3.7.3",
+    "terser": "^5.16.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "@rollup/plugin-json": "^5.0.2"
+  }
+}

@@ -1,8 +1,14 @@
-import { FragSidebar } from '/frags/sidebar.js'
-import { routes } from '/src/routes.js'
-import { Router, Collection } from '/mod/frag/index.js'
+import { FragSidebar } from '../frags/sidebar.js'
+import { routes } from '../src/routes.js'
+import { Router } from '../mod/frag/src/index.js'
 
-export const init = (event) => {
+const init = () => {
+    // if the doc isnt ready yet, just execute when it is
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init)
+        return
+    }
+
     // make our info bar
     new FragSidebar()
         .target('body', 'sidebar')
@@ -16,4 +22,4 @@ export const init = (event) => {
     new Router(routes)
         .target('main', 'view')
         .update()
-}
+} ; init()

@@ -1,4 +1,4 @@
-import { Page } from '/mod/frag/index.js'
+import { Page } from '../mod/frag/src/index.js'
 
 export class Page404 extends Page {
     static href = '/404'

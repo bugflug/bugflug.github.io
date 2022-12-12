@@ -1,8 +1,8 @@
-import { config } from '/src/config.js'
-import { Page } from '/mod/frag/index.js'
-import { FragAccounts } from '/frags/accounts.js'
-import { FragPages } from '/frags/pages.js'
-import { FragTitle } from '/frags/title.js'
+import { config } from '../config.js'
+import { Page } from '../mod/frag/src/index.js'
+import { FragAccounts } from '../frags/accounts.js'
+import { FragPages } from '../frags/pages.js'
+import { FragTitle } from '../frags/title.js'
 
 export class PageHome extends Page {
     static href = '/'
@@ -23,7 +23,7 @@ export class PageHome extends Page {
         
             // embed a twitch stream
             const player = new Twitch.Player('stream', {
-                channel: config.accountNames.twitch,
+                channel: config.accounts.twitch.name,
                 width: 1280,
                 height: 720,
                 muted: 'true'

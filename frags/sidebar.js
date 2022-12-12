@@ -1,8 +1,7 @@
-import { Frag } from '/mod/frag/index.js'
-import { FragAccounts } from '/frags/accounts.js'
-import { FragPages } from '/frags/pages.js'
-import { FragTitle } from '/frags/title.js'
-import { el } from '../mod/frag/src/el.js'
+import { Frag, el } from '../mod/frag/src/index.js'
+import { FragAccounts } from '../frags/accounts.js'
+import { FragPages } from '../frags/pages.js'
+import { FragTitle } from '../frags/title.js'
 
 export class FragSidebar extends Frag {
     static instances = []

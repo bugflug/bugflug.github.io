@@ -1,5 +1,5 @@
-import { Frag, el } from '/mod/frag/index.js'
-import { config } from '/src/config.js'
+import { Frag, el } from '../mod/frag/src/index.js'
+import { config } from '../config.js'
 
 export class FragAccounts extends Frag {
     path = '/frags/accounts.html'
@@ -8,10 +8,10 @@ export class FragAccounts extends Frag {
             // loop and append each account
             // as a link with the site as text
             el.modify('.accounts', el => {
-                for (let account of config.accounts) {
+                for (let site in config.accounts) {
                     let a = document.createElement('a')
-                    a.href = 'https://' + account.url
-                    a.appendChild(document.createTextNode(account.site))
+                    a.href = 'https://' + config.accounts[site].url
+                    a.appendChild(document.createTextNode(site))
                     
                     el.appendChild(a)
                 }

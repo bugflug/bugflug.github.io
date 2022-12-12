@@ -1,5 +1,5 @@
-import { Frag, router, el } from '/mod/frag/index.js'
-import { routes } from '/src/routes.js'
+import { Frag, router, el } from '../mod/frag/src/index.js'
+import { routes } from '../src/routes.js'
 
 export class FragPages extends Frag {
     path = '/frags/pages.html'

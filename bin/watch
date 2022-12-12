@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cd $(dirname $0)
+cd ..
+
+# watch and rollup on change
+npx rollup --config rollup.config.mjs \
+    --validate \
+    --watch \
+    --watch.buildDelay 2

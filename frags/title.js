@@ -1,5 +1,5 @@
-import { Frag, el } from '/mod/frag/index.js'
-import { shuffle } from '/src/util.js'
+import { Frag, el } from '../mod/frag/src/index.js'
+import { shuffle } from '../src/util.js'
 
 export class FragTitle extends Frag {
     static title  = 'bugflug'.split('')
