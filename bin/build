@@ -12,8 +12,11 @@ npx rollup ./src/index.js \
     --exports named
 
 # downgrade
-npx babel src ./bundle/index.js \
-    -o ./bundle/index.js
+#npx babel src ./bundle/index.js \
+#    -o ./bundle/index.js
+# NOTE:
+# babel seems to use require()????
+# like bruh i dont wanna use webpack lol
 
 # compress
 npx terser ./bundle/index.js \

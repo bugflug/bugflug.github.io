@@ -2,28 +2,11 @@
 
 cd $(dirname $0) && cd .. ; echo ''
 
-# make sure we build first (usually)
-read -n 1 -p $'build first? \n[y] yes [n] no [*] exit\n> ' ans && echo ''
-case $ans in
-    y|Y)
-        echo ''
-        ./bin/build;;
-    n|N)
-        echo '';;
-    *)
-        exit;;
-esac
-
-# get the commit msg
-read -p $'commit message for [main] and [public]\n> ' ans && echo ''
-
-# push changes to main branch first ofc
-git add .
-git commit -m "${ans}"
-git push
+# make sure we push to main first
+./bin/push
 
 # swap to public branch
-git checkout -f public
+git switch public
 git add \
     ./assets \
     ./style \
@@ -37,4 +20,4 @@ git commit -m "${ans}"
 git push
 
 # swap back to dev
-git checkout -f main
+git switch main
