@@ -2,26 +2,15 @@
 
 cd $(dirname $0) && cd .. ; echo ''
 
-# make sure we push to main first
+# do a normal push first
 ./bin/push
 
-# swap to public branch
-#git checkout --detach
-#git reset --soft public
-#git checkout public
-#git add \
-#    ./assets \
-#    ./style \
-#    ./bundle \
-#    ./frags \
-#    ./pages \
-#    ./index.html
+# copy our public files to serve
+cp -r ./{assets,bundle,frags,pages,style,index.html,config.js} ../bugflug.github.io.public
 
-#read -p $'commit message\n> ' ans && echo ''
-#git commit -m "${ans}"
-#git push
-
+# get the commit msg and push to the public branch
 cd ../bugflug.github.io.public
-
-# swap back to dev
-#git switch main
+echo "" && read -p $'commit message for [bugflug.github.io/public]\n> ' ans && echo ""
+git add .
+git commit -m "${ans}"
+git push
