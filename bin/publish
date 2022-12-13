@@ -6,7 +6,9 @@ cd $(dirname $0) && cd .. ; echo ''
 ./bin/push
 
 # swap to public branch
-git switch public
+git checkout --detach
+git reset --soft public
+git checkout public
 git add \
     ./assets \
     ./style \
