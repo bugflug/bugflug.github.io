@@ -1,0 +1,3 @@
+[submodule "mod/frag"]
+	path = mod/frag
+	url = https://github.com/bugflug/frag.js
