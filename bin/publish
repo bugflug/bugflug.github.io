@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-dir=$(dirname $0)
-cd $dir && cd .. ; echo ''
+cd $(dirname $0) && cd .. ; echo ''
 
 # make sure we push to main first
 ./bin/push
@@ -22,7 +21,7 @@ cd $dir && cd .. ; echo ''
 #git commit -m "${ans}"
 #git push
 
-cd "../${dir}.public"
+cd ../bugflug.github.io.public
 
 # swap back to dev
 #git switch main
