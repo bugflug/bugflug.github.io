@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
 
-cd $(dirname $0) && cd .. ; echo ''
+dir=$(dirname $0)
+cd $dir && cd .. ; echo ''
 
 # make sure we push to main first
 ./bin/push
 
 # swap to public branch
-git checkout --detach
-git reset --soft public
-git checkout public
-git add \
-    ./assets \
-    ./style \
-    ./bundle \
-    ./frags \
-    ./pages \
-    ./index.html
+#git checkout --detach
+#git reset --soft public
+#git checkout public
+#git add \
+#    ./assets \
+#    ./style \
+#    ./bundle \
+#    ./frags \
+#    ./pages \
+#    ./index.html
 
-read -p $'commit message\n> ' ans && echo ''
-git commit -m "${ans}"
-git push
+#read -p $'commit message\n> ' ans && echo ''
+#git commit -m "${ans}"
+#git push
+
+cd "../${dir}.public"
 
 # swap back to dev
-git switch main
+#git switch main
