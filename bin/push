@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+cd $(dirname $0) && cd ..
+
+# update frag.js?
+echo "" && read -n 1 -p $'also push frag.js? \n[y] yes [n] no [*] exit\n> ' ans && echo ""
+case $ans in
+    y|Y)
+        ./mod/frag/bin/push &&
+        cd $(dirname $0) && cd .. ;;
+    n|N)
+        echo 'not pushing frag.js.';;
+    *)
+        exit;;
+esac
+
+# make sure we build
+echo "" && read -n 1 -p $'build first? \n[y] yes [n] no [*] exit\n> ' ans && echo ""
+case $ans in
+    y|Y)
+        echo ''
+        ./bin/build;;
+    n|N)
+        echo 'not building.';;
+    *)
+        exit;;
+esac
+
+# get the commit msg and push
+echo "" && read -p $'commit message for [bugflug.github.io/main]\n> ' ans && echo ""
+git add .
+git commit -m "${ans}"
+git push
