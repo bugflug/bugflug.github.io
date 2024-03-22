@@ -1,0 +1,48 @@
+/** root */
+
+:root {
+    /** units */
+    --unit: 16px;
+
+    /** fonts */
+    --font-sans: 'Lato', sans-serif;
+    --font-serif: 'Crimson Text', sans;
+
+    /** colors */
+    --bg-3: #000000;
+    --bg-2: #161616;
+    --bg-1: #1a1a1a;
+    
+    --text-2: rgba(255,255,255,0.45);
+    --text-1: rgba(255,255,255,0.95);
+}
+
+/** base */
+
+body {
+    /* unit definition */
+    font-size: var(--unit);
+
+    /* font */
+    font-family: var(--font-sans);
+
+    /* size */
+    width: 100vw;
+    min-height: 100vh;
+
+    /* display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    /* colors */
+    color: var(--text-1);
+    background: var(--bg-3);
+}
+
+a {
+    /* font */
+    text-decoration: none;
+    color: var(--text-1);
+}
