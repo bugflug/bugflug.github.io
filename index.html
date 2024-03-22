@@ -1,23 +1,54 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>bug</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- style -->
-        <link rel="stylesheet" href="style/index.css">
-        <!-- scripts -->
-        <script src="bundle/index.js"></script>
-        <!-- external scripts -->
-        <script src="https://embed.twitch.tv/embed/v1.js"></script>
-        <!-- google fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400;1,700&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <!-- sidebar -->
-        <sidebar></sidebar>
-        <!-- router -->
-        <main><view></view></main>
-    </body>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- sveltekit -->
+		
+		<link href="./_app/immutable/assets/0.Co8eg4My.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/2.BoNqvrXz.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.YzkI9xWh.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.DghjnlQg.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.Bmg8oFKD.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.B-7WRs1p.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.B9dBq_Iw.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.CYN3DZSp.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.DzwRG0LK.js">
+
+		<!-- google fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,700;1,400;1,700&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div id="page" class="svelte-1whivj7"><div id="splash-wrapper" class="svelte-17v1q52">  <div id="splash" class="svelte-17v1q52"></div></div> <div id="links-wrapper" class="svelte-17v1q52"><div id="links" class="svelte-17v1q52"><a href="https://youtube.com/@bugflug" class="svelte-17v1q52">youtube</a><a href="https://twitch.tv/bugflug" class="svelte-17v1q52">twitch</a><a href="https://steamcommunity.com/id/bugflug" class="svelte-17v1q52">steam</a><a href="https://twitter.com/bugflug" class="svelte-17v1q52">twitter</a><a href="https://backpack.tf/classifieds?steamid=76561198081991204" class="svelte-17v1q52">backpack</a></div> </div></div> 
+			
+			<script>
+				{
+					__sveltekit_3y5fap = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/bugflug.github.io"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.YzkI9xWh.js"),
+						import("./_app/immutable/entry/app.B-7WRs1p.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
 </html>
