@@ -1,1 +1,0 @@
-import{w as n}from"./paths.DPHy2mvN.js";function c(e){return(e==null?void 0:e.length)!==void 0?e:Array.from(e)}const f=[{name:"home",href:""},{name:"terraria guesser",href:"terrariale"},{name:"minecraft resources",href:"minecraft"},{name:"cookie jar",href:"cookies"},{name:"sandwich generator",href:"sandwich"}],m=n("none"),a=n("0");export{f as _,a,m as b,c as e};
