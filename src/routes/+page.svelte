@@ -1,32 +1,105 @@
-<div id="splash-wrapper">
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div id="splash" on:click={generate}>
-        {#each chars as { char, color } , i}
-            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-            <span style="
-                animation-delay: {i * 100}ms;
-                color: {color};"
-            on:mouseenter|stopPropagation={randomColor}
-            >{char}</span>
-        {/each}
+<div id="page">
+    <div id="background" out:fade={{ duration: 350 }}>
+        <LazyImage url={backgroundUrl} duration={5000} />
     </div>
-</div>
+    <div id="splash-wrapper" out:comeinfade={{ duration: 300 }}>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div id="splash" on:click={generate} bind:this={splashElement}>
+            {#each chars as char, i}
+                <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+                <span style="animation-delay: {i * 100}ms;"on:mouseenter|stopPropagation={randomColor}>{char}</span>
+            {/each}
+        </div>
+    </div>
 
-<div id="links-wrapper">
-    <div id="links">
-        {#each links as { name, href }}
-            <a href="https://{href}">{name}</a>
-        {/each}
+    <div id="links-routes-wrapper" transition:slidefade={{ direction: 'up' }}>
+        <div id="links">
+            <p>links</p>
+            {#each links as { name, href }}
+                <a class="left" href="https://{href}">{name}</a>
+            {/each}
+        </div>
+        <div id="routes">
+            <p>pages</p>
+            {#each routes as { name, href }}
+                <a class="left" href="{base}/{href}">{name}</a>
+            {/each}
+        </div>
     </div>
 </div>
 
 <style>
-    :global(#page) {
+    #page {
         /* display */
+        position: relative;
         display: grid;
-        grid: 2fr 3fr / 1fr;
-        gap: 4rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: 45vh 1fr;
+        justify-items: center;
+        overflow: hidden;
+
+        /* size */
+        height: 100vh;
+
+        /* background */
+        background: none;
+    }
+
+    @media (orientation: landscape) {
+        #page {
+            /* display */
+            gap: 8rem 0;
+            grid-template-columns: 1fr;
+            grid-template-rows: 45vh 1fr;
+        }
+    }
+
+    @media (orientation: portrait) {
+        #page {
+            /* display */
+            gap: 0 0;
+            grid-template-columns: 1fr;
+            grid-template-rows: 45vh 1fr;
+        }
+    }
+
+    #background {
+        /* display */
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -89;
+
+        /* size */
+        width: 100%;
+        height: 100%;
+    }
+
+    #background :global(img) {
+        /* display */
+        object-fit: cover;
+        image-rendering: pixelated;
+    }
+
+    @media (orientation: landscape) {
+        #background :global(img) {
+            /* size */
+            width: 100vw;
+            max-width: 80vw;
+            max-height: 80vw;
+        }
+    }
+
+    @media (orientation: portrait) {
+        #background :global(img) {
+            /* size */
+            height: 120vh;
+        }
     }
 
     #splash-wrapper {
@@ -37,18 +110,16 @@
     }
 
     #splash {
-        /* size */
-        max-width: 32rem;
-
         /* font */
-        font-size: 3rem;
+        font-size: 4rem;
         font-family: var(--font-serif);
-        font-weight: 800;
+        font-weight: 900;
         text-align: center;
         user-select: none;
 
         /* display */
         cursor: pointer;
+        overflow: visible;
 
         /* animation */
         animation: rotate 10s ease infinite;
@@ -56,75 +127,107 @@
 
     #splash span {
         /* display */
+        display: inline;
         position: relative;
         padding: 0 0 0.6em 0;
+        top: 0em;
 
         /* animation */
-        animation: bounce 5s ease infinite, come-in 0s both 1;
-        transition: color 0.2s ease;
+        animation: bounce 5000ms ease infinite, come-in 100ms both 1;
+        transition: color 200ms ease, top 150ms ease, opacity 200ms ease;
     }
 
-    #links-wrapper {
+    #links-routes-wrapper {
         /* display */
-        display: flex;
-        justify-content: center;
+        display: grid;
+        gap: 0 4rem;
+        justify-items: center;
+
+        /* size */
+        width: 100%;
     }
 
-    #links {
+    @media (orientation: landscape) {
+        #links-routes-wrapper {
+            /* display */
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+
+            /* size */
+            max-width: 36rem;
+        }
+    }
+
+    @media (orientation: portrait) {
+        #links-routes-wrapper {
+            /* display */
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr;
+
+            /* size */
+            max-width: 100%;
+        }
+    }
+
+    #links, #routes {
         /* size */
         max-width: 24rem;
 
-        /* display */
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1rem 1rem 1rem 1rem;
-        gap: 0.5rem 4rem;
-    }
-
-    #links a {
-        /* display */
-        position: relative;
-
         /* font */
-        color: var(--text-2);
         font-weight: 800;
 
-        /* animation */
-        transition: color 150ms ease;
+        /* display */
+        display: flex;
+        flex-direction: column;
     }
 
-    #links a:hover {
+    @media (orientation: landscape) {
+        #links {
+            /* display */
+            justify-content: flex-start;
+            justify-self: last;
+        }
+    }
+
+    @media (orientation: portrait) {
+        #links {
+            /* display */
+            justify-content: flex-end;
+
+            /* size */
+            padding-right: 33%;
+        }
+    }
+
+    @media (orientation: portrait) {
+        #routes {
+            /* size */
+            padding-left: 33%;
+        }
+    }
+
+    #links-routes-wrapper p {
+        /* font */
+        font-family: var(--font-serif);
+        color: var(--text-4);
+    }
+
+    #links-routes-wrapper a {
+        /* size */
+        height: 1.375em;
+
+        /* font */
+        color: var(--text-3);
+    }
+
+    #links-routes-wrapper a:hover {
         /* font */
         color: var(--text-1);
-
-        /* animation */
-        transition: color 0ms;
     }
 
-    #links a::after {
+    #links-routes-wrapper a::after {
         /* display */
-        position: absolute;
-        content: '';
-        right: calc(100% + 0.5rem);
-        top: 0.6em;
-
-        /* background */
-        background: var(--text-2);
-
-        /* size */
-        height: 0.125rem;
-        width: 0;
-
-        /* animation */
-        transition: width 200ms ease;
-    }
-
-    #links a:hover::after {
-        /* size */
-        width: 1.5rem;
-
-        /* animation */
-        transition: width 100ms ease;
+        top: calc(50% + 0.125em);
     }
 
     @keyframes rotate {
@@ -166,10 +269,24 @@
     }
 </style>
 
-<script lang="ts">
-    import Card from '../components/Card.svelte';
+<script lang="ts" context="module">
+    import _routes from '$lib/routes';
 
-    import { onMount } from 'svelte';
+    const routes = _routes.filter((route) => route.href !== '');
+
+    const backgroundUrl = base + '/clouds-' + Math.floor(Math.random() * 3) + '.gif';
+</script>
+
+<script lang="ts">
+    import { backgroundStyle, backgroundOpacity } from '../store/background';
+    import { slidefade, comeinfade } from '$lib/transition';
+    import { fade } from 'svelte/transition';
+    import { onMount, onDestroy } from 'svelte';
+    import { base } from '$app/paths';
+
+    import { set as backgroundSet, reset as backgroundReset } from '../components/Background.svelte';
+
+    import LazyImage from '../components/LazyImage.svelte';
 
     const links = [
         { name: 'youtube' , href: 'youtube.com/@bugflug'                              },
@@ -178,25 +295,33 @@
         { name: 'twitter' , href: 'twitter.com/bugflug'                               },
         { name: 'backpack', href: 'backpack.tf/classifieds?steamid=76561198081991204' }
     ]
-    const allColors = [
-        '#ff306c',
-        '#ad005f',
-        '#e04f0b',
-        '#ffa200',
-        '#ffe74c',
-        '#ebffd4',
-        '#48ff00',
-        '#00cf2d',
-        '#31d4e0',
-        '#006ec2',
-        '#1629f7',
-        '#450073',
-        '#8e1cc7',
-        '#f018f0'
-    ];
 
+    const colors = [
+        [255, 45, 108],
+        [173, 0, 95],
+        [224, 79, 11],
+        [255, 162, 0],
+        [255, 231, 76],
+        [235, 255, 212],
+        [72, 255, 0],
+        [0, 207, 45],
+        [49, 212, 224],
+        [0, 110, 194],
+        [22, 41, 247],
+        [69, 0, 115],
+        [142, 28, 199],
+        [240, 24, 240]
+    ]
     let splashes: string[];
-    let chars: { char: string, color: string }[] = [];
+    let chars: string[] = [];
+    let colorFg = [0, 0, 0];
+    let colorBg = [0, 0, 0];
+    let splashElement: HTMLDivElement;
+    let backgroundElement: HTMLDivElement;
+
+    const onImgLoad = (el: HTMLElement) => {
+        el.style.opacity = '1';
+    }
 
     onMount(() => {
         // fetch the splashes
@@ -211,34 +336,70 @@
             splashes = ['bugflug'];
             generate();
         });
+
+        backgroundSet('var(--bg-3');
+
+        backgroundStyle.set('var(--bg-3)');
+        // backgroundStyle.set('white')
+        backgroundOpacity.set('1');
     });
 
-    // generate chars :D
+    onDestroy(() => {
+        backgroundReset();
+        backgroundOpacity.set('0');
+    });
+
+    // generate chars :D and colors :D
     const generate = () => {
         chars = [];
 
-        let splash: string = splashes[Math.floor(Math.random() * splashes.length)];
-        let colors: string[] = [];
+        // make sure the new selected splash is not the same as the last (by removing it)
+        let splash: string;
+        if (splashes.length > 0) {
+            const rand = Math.floor(Math.random() * splashes.length);
+            splash = splashes[rand];
+            splashes.splice(rand, 1);
+        } else {
+            splash = '...'
+        }
 
-        // make sure the new selected splash is not the same as the last
+        // get a fresh color
+        colorFg = colors[Math.floor(Math.random() * colors.length)];
 
-        // ensure we have enough colors for the entire splash
-        while (colors.length < splash.length) colors = colors.concat(allColors);
+        // ensure the second color is not the same
+        colorBg = colorFg;
+        while (colorBg === colorFg) {
+            colorBg = colors[Math.floor(Math.random() * colors.length)];
+        }
 
-        // fisher-yates array shuffle to randomize all colors
-        colors.forEach((color, i) => {
-            const rand = Math.floor(Math.random() * (i + 1));
-            
-            colors[i] = colors[rand];
-            colors[rand] = color;
-        })
+        splashElement.style.color = 'rgb(' + colorFg.join(',') + ')';
 
-        setTimeout(() => chars = splash.split('').map((char, i) => {
-            return {
-                char,
-                color: colors[i]
-            }
-        }), 10);
+        const count = 9;
+        let textShadow = '';
+        let interpolatedColors: string[] = [];
+
+        for (let i = 0; i < count; i++) {
+            const factor = i / count;
+            const r = interpolateNums(colorFg[0], colorBg[0], factor);
+            const g = interpolateNums(colorFg[1], colorBg[1], factor);
+            const b = interpolateNums(colorFg[2], colorBg[2], factor);
+
+            interpolatedColors.push(r + ',' + g + ',' + b)
+        }
+    
+        splashElement.style.textShadow = `
+        ${count}px ${count}px rgba(${colorBg.join(',')},0.3),
+        ${interpolatedColors
+            .map((color, i) => `${i}px ${i}px rgb(${color})`)
+            .join(',')},
+        ${count}px ${count}px ${count}px rgba(0,0,0,0.5)
+        `;
+
+        setTimeout(() => chars = splash.split(''), 10);
+    }
+
+    const interpolateNums = (numA: number, numB: number, factor: number) => {
+        return Math.round(numA * (1 - factor) + numB * factor);
     }
 
     // grab one random color and set it
@@ -247,8 +408,8 @@
 
         // weird ass bug where it sometimes propogates onto other elements.
         // idkw hy this happens but just check this
-        if (target.localName === 'span') {
-            target.style.color = allColors[Math.floor(Math.random() * allColors.length)];
+        if (event.relatedTarget !== null) if (target.localName === 'span') {
+            target.style.color = colors[Math.floor(Math.random() * colors.length)];
         }
     }
 </script>
