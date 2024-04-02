@@ -5,18 +5,27 @@ export default [
     },
     {
         name: 'terraria guesser',
-        href: 'terrariale'
+        href: 'terrariale',
+        wip: true,
+    },
+    {
+        name: 'obs tools',
+        href: 'obs',
+        wip: true
     },
     {
         name: 'minecraft resources',
-        href: 'minecraft'
+        href: 'minecraft',
+        wip: true
     },
     {
         name: 'cookie jar',
-        href: 'cookies'
+        href: 'cookies',
+        wip: true
     },
     {
         name: 'sandwich generator',
-        href: 'sandwich'
+        href: 'sandwich',
+        wip: true
     }
 ];

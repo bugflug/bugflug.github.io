@@ -1,7 +1,7 @@
 <div id="page">
-    <div id="background" out:fade={{ duration: 350 }}>
+    <!--<div id="background" out:fade={{ duration: 350 }}>
         <LazyImage url={backgroundUrl} duration={5000} />
-    </div>
+    </div>-->
     <div id="splash-wrapper" out:comeinfade={{ duration: 300 }}>
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -22,8 +22,8 @@
         </div>
         <div id="routes">
             <p>pages</p>
-            {#each routes as { name, href }}
-                <a class="left" href="{base}/{href}">{name}</a>
+            {#each routes as { name, href, wip }}
+                <a class="left" href="{base}/{href}" class:wip={wip}>{name}</a>
             {/each}
         </div>
     </div>
@@ -62,6 +62,11 @@
             grid-template-columns: 1fr;
             grid-template-rows: 45vh 1fr;
         }
+    }
+
+    :global(.clouds-background img) {
+        /* display */
+        image-rendering: pixelated;
     }
 
     #background {
@@ -220,6 +225,11 @@
         color: var(--text-3);
     }
 
+    #links-routes-wrapper a.wip {
+        /* font */
+        color: var(--text-4);
+    }
+
     #links-routes-wrapper a:hover {
         /* font */
         color: var(--text-1);
@@ -284,7 +294,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { base } from '$app/paths';
 
-    import { set as backgroundSet, reset as backgroundReset } from '../components/Background.svelte';
+    import { addBackground } from '../components/BackgroundStack.svelte';
 
     import LazyImage from '../components/LazyImage.svelte';
 
@@ -337,7 +347,8 @@
             generate();
         });
 
-        backgroundSet('var(--bg-3');
+        // set page backgrounds
+        addBackground({ color: 'var(--bg-3)', image: backgroundUrl, clazz: 'clouds-bg' });
 
         backgroundStyle.set('var(--bg-3)');
         // backgroundStyle.set('white')
@@ -345,7 +356,6 @@
     });
 
     onDestroy(() => {
-        backgroundReset();
         backgroundOpacity.set('0');
     });
 

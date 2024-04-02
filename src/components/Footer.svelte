@@ -6,7 +6,6 @@
     </div>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div id="nav" on:mouseleave={() => (showMenu = false)}>
-    <!-- <div id="nav"> -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div id="menu" class="card glass" class:show={(!!showMenu)}>
             {#each navs as { name, href }}
@@ -191,7 +190,7 @@
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-start;
-        bottom: calc(-100% - 3rem - 1rem - 1rem - 1rem - 1rem);
+        bottom: calc(-100% - 4.75rem - 1rem - 1rem - 1rem - 1rem);
         right: 0.5rem;
 
         /* size */
@@ -233,8 +232,6 @@
 </script>
 
 <script lang="ts">
-    import Card from './Card.svelte';
-
     import { base } from '$app/paths';
     import { page } from '$app/stores';
 

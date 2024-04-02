@@ -8,7 +8,7 @@
 
     import { backgroundStyle, backgroundOpacity } from '../store/background';
 
-    import Background from '../components/Background.svelte';
+    import BackgroundStack from '../components/BackgroundStack.svelte';
 
     /** Unwrapped value from the background store. */
     let style   = 'none';
@@ -57,8 +57,8 @@
     </div>
 {/key}-->
 
-<div id="background" style="background: {style}; opacity: {opacity};"></div>
-<Background />
+<!--<div id="background" style="background: {style}; opacity: {opacity};"></div>-->
+<BackgroundStack />
 <slot />
 
 <Footer></Footer>
