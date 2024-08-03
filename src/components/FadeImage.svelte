@@ -1,12 +1,16 @@
+<!--
+@component
+
+Image that fades in smoothly when it loads.
+@param duration
+-->
+
 <img alt="" bind:this={el} style="transition: opacity {duration}ms ease;" >
 
 <style>
     img {
         /* colors */
         opacity: 0;
-
-        /* animation */
-        transition: opacity 5500ms ease;
     }
 </style>
 

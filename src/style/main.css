@@ -49,6 +49,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow: hidden;
 
     /* colors */
     color: var(--text-1);
@@ -58,8 +59,45 @@ body {
 #page {
     /* size */
     width: 100vw;
-    padding: 0 15vw 0 15vw;
+    padding: 8rem 20vw 8rem 20vw;;
     min-height: 100vh;
+    gap: 4rem;
+
+    /* display */
+    overflow: scroll;
+}
+
+@media (orientation: landscape) {
+    #page {
+        /* size */
+        padding: 8rem 20vw 8rem 20vw;
+    }
+}
+
+@media (orientation: portrait) {
+    #page {
+        /* size */
+        padding: 8rem 4rem 8rem 4rem;
+    }
+}
+
+#page.corrected {
+    /* size */
+    margin-top: 33vh;
+}
+
+/** text */
+
+h1, h2, h3 {
+    /* font */
+    font-family: var(--font-serif);
+    color: var(--text-4);
+}
+
+p {
+    /* font */
+    font-family: var(--font-sans);
+    color: var(--text-2);
 }
 
 /** buttons & links */

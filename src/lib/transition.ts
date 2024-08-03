@@ -1,5 +1,6 @@
 import { cubicInOut } from 'svelte/easing';
 
+/** Element slides in from the given direction and fades. */
 export const slidefade = (node: Element, { delay, duration, easing, direction }: any) => {
     const existing = getComputedStyle(node).transform.replace('none', '');
 
@@ -23,6 +24,7 @@ export const slidefade = (node: Element, { delay, duration, easing, direction }:
     }
 }
 
+/** Element grows to come in, shrinks to leave, and fades. */
 export const comeinfade = (node: Element, { delay, duration, easing }: any) => {
     const existing = getComputedStyle(node).transform.replace('none', '');
 
