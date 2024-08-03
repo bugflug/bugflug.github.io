@@ -1,3 +1,0 @@
-[submodule "static/minecraft"]
-	path = static/minecraft
-	url = https://github.com/bugflug/minecraft.git
